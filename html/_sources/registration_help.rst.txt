@@ -1,0 +1,7 @@
+General helper functions
+========================
+
+.. automodule:: registration_help
+   :members:
+   :undoc-members:
+   :show-inheritance:

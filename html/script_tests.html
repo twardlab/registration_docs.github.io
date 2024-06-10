@@ -1,0 +1,435 @@
+
+
+<!doctype html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Step 1 Example &#8212; Mouse Brain Atlas Registration 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=649a27d8" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css?v=532c1bf3" />
+    <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
+    
+    <script src="_static/documentation_options.js?v=2709fde1"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Tutorials" href="registration_scripts.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="registration_scripts.html" title="Tutorials"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mouse Brain Atlas Registration 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="registration_scripts.html" accesskey="U">Tutorials</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Step 1 Example</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;/home/abenneck/Desktop/image_reg/dragonfly_registration_summer_2023/registration_scripts/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<section id="Step-1-Example">
+<h1>Step 1 Example<a class="headerlink" href="#Step-1-Example" title="Link to this heading">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example where</span>
+<span class="c1"># !python3 step1_atlas_registration.py &#39;precomputed&#39; &#39;hTME15-1&#39;</span>
+
+<span class="n">brain</span> <span class="o">=</span> <span class="s1">&#39;hTME15-1&#39;</span>
+<span class="n">orientation</span> <span class="o">=</span> <span class="s1">&#39;R&#39;</span>
+<span class="n">target_files</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_01_2023-05-08_10.12.46_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_02_2023-05-08_10.31.20_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_03_2023-05-08_10.48.01_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_04_2023-05-08_11.24.52_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_05_2023-05-08_11.43.25_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_06_2023-05-08_11.57.43_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_07_2023-05-08_12.19.31_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_08_2023-05-08_12.35.58_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_09_2023-05-08_12.55.16_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">]</span>
+<span class="n">outdir</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/dragonfly_work/dragonfly_outputs_script/hTME15-1/dragonfly_output_vis&#39;</span>
+<span class="n">atlas_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/ara_nissl_50.vtk&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/average_template_50.vtk&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/annotation_50.vtk&#39;</span><span class="p">]</span>
+<span class="n">to_flip</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda:0&#39;</span>
+<span class="n">A</span> <span class="o">=</span> <span class="s2">&quot;[[-1.0,0.0,0.0,1000.0], [0.0,0.0,-1.0,200.0],[0.0,1.0,0.0,-1800.0], [0.0,0.0,0.0,1.0]]&quot;</span>
+<span class="n">d_path</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/Desktop/donglab_workflows&#39;</span>
+<span class="n">e_path</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/Desktop/emlddmm&#39;</span>
+
+<span class="c1"># Example where all the input arguments are provided</span>
+<span class="c1"># !python3 step1_atlas_registration.py &#39;hTME15-1&#39; &#39;R&#39; -low &#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_01_2023-05-08_10.12.46_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_02_2023-05-08_10.31.20_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_03_2023-05-08_10.48.01_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_04_2023-05-08_11.24.52_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_05_2023-05-08_11.43.25_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_06_2023-05-08_11.57.43_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_07_2023-05-08_12.19.31_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_08_2023-05-08_12.35.58_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_09_2023-05-08_12.55.16_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; -out &#39;/home/abenneck/dragonfly_work/dragonfly_outputs_script/hTME15-1/dragonfly_output_vis&#39; -atlas_paths &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/ara_nissl_50.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/average_template_50.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/annotation_50.vtk&#39; -to_flip 0 1 -device &#39;cuda:0&#39; -d_path &#39;/home/abenneck/Desktop/donglab_workflows&#39; -e_path &#39;/home/abenneck/Desktop/emlddmm&#39; --A &quot;[[-1.0,0.0,0.0,1000.0], [0.0,0.0,-1.0,200.0],[0.0,1.0,0.0,-1800.0], [0.0,0.0,0.0,1.0]]&quot;</span>
+
+<span class="c1"># Example where all the input arguments are provided, aside from &#39;A&#39; + only one slice is passed for registration</span>
+<span class="c1"># !python3 step1_atlas_registration.py &#39;hTME15-1&#39; &#39;R&#39; -low &#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_09_2023-05-08_12.55.16_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; -out &#39;/home/abenneck/dragonfly_work/dragonfly_outputs_script/hTME15-1/dragonfly_output_vis&#39; -atlas_paths &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/ara_nissl_50.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/average_template_50.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/annotation_50.vtk&#39; -to_flip 0 1 -device &#39;cuda:0&#39; -d_path &#39;/home/abenneck/Desktop/donglab_workflows&#39; -e_path &#39;/home/abenneck/Desktop/emlddmm&#39;</span>
+</pre></div>
+</div>
+</div>
+<section id="Step-1-Outputs">
+<h2>Step 1 Outputs<a class="headerlink" href="#Step-1-Outputs" title="Link to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">16</span><span class="p">))</span>
+
+<span class="n">fname_recon0</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/dragonfly_work/dragonfly_outputs_weighted/TME08-1/dragonfly_output_vis/recon_it_00000.jpg&#39;</span>
+<span class="n">recon0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">fname_recon0</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Before registration&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">recon0</span><span class="p">)</span>
+
+<span class="n">fname_rgb0</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/dragonfly_work/dragonfly_outputs_weighted/TME08-1/dragonfly_output_vis/rgb_it_00000.jpg&#39;</span>
+<span class="n">rgb0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">fname_rgb0</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rgb0</span><span class="p">)</span>
+
+
+<span class="n">fname_reconn1</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/dragonfly_work/dragonfly_outputs_weighted/TME08-1/dragonfly_output_vis/recon_it_39761.jpg&#39;</span>
+<span class="n">reconn1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">fname_reconn1</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;After registration&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reconn1</span><span class="p">)</span>
+
+<span class="n">fname_rgbn1</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/dragonfly_work/dragonfly_outputs_weighted/TME08-1/dragonfly_output_vis/rgb_it_39761.jpg&#39;</span>
+<span class="n">rgbn1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">fname_rgbn1</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">rgbn1</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">set_tight_layout</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/script_tests_4_0.png" src="_images/script_tests_4_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Step-2-Example">
+<h1>Step 2 Example<a class="headerlink" href="#Step-2-Example" title="Link to this heading">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">high_path</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_04A_ch_0_pow_[0.125]_down.npz&#39;</span>
+<span class="n">low_path</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_1_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_04_ch_1_pow_[0.125]_down.npz&#39;</span>
+<span class="n">outdir</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/dragonfly_work/dragonfly_outputs_script/TME08-1/step2_out&#39;</span>
+<span class="n">shifts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">800</span><span class="p">,</span><span class="mi">2900</span><span class="p">]</span>
+<span class="n">d_path</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/Desktop/donglab_workflows&#39;</span>
+<span class="n">e_path</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/Desktop/emlddmm&#39;</span>
+
+<span class="c1"># Example where all input arguments are provided</span>
+<span class="c1"># !python3 step2_atlas_registration.py &#39;TME08-1&#39; &#39;-low_path=/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_1_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_04_ch_1_pow_[0.125]_down.npz&#39; &#39;-high_path=/home/abenneck/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_04A_ch_0_pow_[0.125]_down.npz&#39; &#39;-outdir=/home/abenneck/dragonfly_work/dragonfly_outputs_script/TME08-1/step2_out&#39; &#39;-high_num=04A&#39; &#39;-d_path=/home/abenneck/Desktop/donglab_workflows&#39; &#39;-e_path=/home/abenneck/Desktop/emlddmm&#39; -shifts 0 800 2900</span>
+</pre></div>
+</div>
+</div>
+<section id="Step-2-Outputs">
+<h2>Step 2 Outputs<a class="headerlink" href="#Step-2-Outputs" title="Link to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+
+<span class="n">fnameb</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/dragonfly_work/dragonfly_outputs/TME08-1/dragonfly_10_to_30_outputs/04A_err3_before.jpg&#39;</span>
+<span class="n">imgb</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">fnameb</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imgb</span><span class="p">)</span>
+
+<span class="n">fnamea</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/dragonfly_work/dragonfly_outputs/TME08-1/dragonfly_10_to_30_outputs/04A_err3_after.jpg&#39;</span>
+<span class="n">imga</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">fnamea</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">imga</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">set_tight_layout</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/script_tests_8_0.png" src="_images/script_tests_8_0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Step-3-Example">
+<h1>Step 3 Example<a class="headerlink" href="#Step-3-Example" title="Link to this heading">¶</a></h1>
+<section id="Whole-brain-example-(TME08-1)">
+<h2>Whole brain example (TME08-1)<a class="headerlink" href="#Whole-brain-example-(TME08-1)" title="Link to this heading">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define all input variables</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="s1">&#39;TME08-1&#39;</span>
+<span class="n">orientation</span> <span class="o">=</span> <span class="s1">&#39;W&#39;</span>
+<span class="n">neuron_dir</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_reconstructions&#39;</span>
+<span class="n">low_to_high_dir</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/andrew_work/test/dragonfly_work/dragonfly_outputs/TME08-1/dragonfly_10_to_30_outputs&#39;</span>
+<span class="n">tform</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/andrew_work/test/dragonfly_work/dragonfly_outputs_weighted/TME08-1/dragonfly_output_vis/transformation_outputs.npz&#39;</span>
+
+<span class="n">low_img_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_01_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_02_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_03_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_04_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_05_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_06_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_07_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_08_ch_0_pow_[0.125]_down.npz&#39;</span>
+                <span class="p">]</span>
+<span class="n">low_imd_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;01&#39;</span><span class="p">,</span><span class="s1">&#39;02&#39;</span><span class="p">,</span><span class="s1">&#39;03&#39;</span><span class="p">,</span><span class="s1">&#39;04&#39;</span><span class="p">,</span><span class="s1">&#39;05&#39;</span><span class="p">,</span><span class="s1">&#39;06&#39;</span><span class="p">,</span><span class="s1">&#39;07&#39;</span><span class="p">,</span><span class="s1">&#39;08&#39;</span><span class="p">]</span>
+
+<span class="n">high_img_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_01A_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_01B_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_02A_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_02B_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_03A_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_03B_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_04A_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_04B_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_05A_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_05B_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_06A_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_06B_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_07A_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_07B_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_08A_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_08B_ch_0_pow_[0.125]_down.npz&#39;</span>
+                 <span class="p">]</span>
+<span class="n">high_img_ids</span> <span class="o">=</span> <span class="s2">&quot;[[&#39;01A&#39;,&#39;01B&#39;],[&#39;02A&#39;,&#39;02B&#39;],[&#39;03A&#39;,&#39;03B&#39;],[&#39;04A&#39;,&#39;04B&#39;],[&#39;05A&#39;,&#39;05B&#39;],[&#39;06A&#39;,&#39;06B&#39;],[&#39;07A&#39;,&#39;07B&#39;],[&#39;08A&#39;,&#39;08B&#39;]]&quot;</span>
+
+<span class="n">outdir</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/dragonfly_work/dragonfly_outputs_script/TME08-1/step3_out&#39;</span>
+<span class="n">atlas_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/ara_nissl_50.vtk&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/average_template_50.vtk&#39;</span><span class="p">,</span><span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/dong/upenn_atlas/UPenn_labels_reoriented_origin.vtk&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/dong/upenn_atlas/atlas_info_KimRef_FPbasedLabel_v2.7.csv&#39;</span><span class="p">]</span>
+<span class="n">d_path</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/Desktop/donglab_workflows&#39;</span>
+<span class="n">e_path</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/Desktop/emlddmm&#39;</span>
+
+<span class="c1"># Example where all input arguments are provided</span>
+<span class="c1"># !python3 step3_atlas_registration.py &#39;TME08-1&#39; &#39;W&#39; &#39;-neuron_dir=/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_reconstructions&#39; &#39;-low_to_high_dir=/home/abenneck/mounts/bmaproot/nafs/dtward/andrew_work/test/dragonfly_work/dragonfly_outputs/TME08-1/dragonfly_10_to_30_outputs&#39; &#39;-tform=/home/abenneck/mounts/bmaproot/nafs/dtward/andrew_work/test/dragonfly_work/dragonfly_outputs_weighted/TME08-1/dragonfly_output_vis/transformation_outputs.npz&#39; -low_img_paths  &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_01_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_02_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_03_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_04_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_05_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_06_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_07_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_08_ch_0_pow_[0.125]_down.npz&#39; -low_img_ids &#39;01&#39; &#39;02&#39; &#39;03&#39; &#39;04&#39; &#39;05&#39; &#39;06&#39; &#39;07&#39; &#39;08&#39; -high_img_paths  &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_01A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_01B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_02A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_02B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_03A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_03B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_04A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_04B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_05A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_05B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_06A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_06B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_07A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_07B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_08A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_08B_ch_0_pow_[0.125]_down.npz&#39; -high_img_ids &#39;[[01A,01B],[02A,02B],[03A,03B],[04A,04B],[05A,05B],[06A,06B],[07A,07B],[08A,08B]]&#39; -outdir &#39;/home/abenneck/dragonfly_work/dragonfly_outputs_script/TME08-1/step3_out&#39; -atlas_paths &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/ara_nissl_50.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/average_template_50.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/dong/upenn_atlas/UPenn_labels_reoriented_origin.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/dong/upenn_atlas/atlas_info_KimRef_FPbasedLabel_v2.7.csv&#39; -e_path &#39;/home/abenneck/Desktop/emlddmm&#39; -d_path &#39;/home/abenneck/Desktop/donglab_workflows&#39;</span>
+
+<span class="c1"># Example where the high_img_ids argument is not provided, but rather generated within the script</span>
+<span class="c1"># !python3 step3_atlas_registration.py &#39;TME08-1&#39; &#39;W&#39; &#39;-neuron_dir=/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_reconstructions&#39; &#39;-low_to_high_dir=/home/abenneck/mounts/bmaproot/nafs/dtward/andrew_work/test/dragonfly_work/dragonfly_outputs/TME08-1/dragonfly_10_to_30_outputs&#39; &#39;-tform=/home/abenneck/mounts/bmaproot/nafs/dtward/andrew_work/test/dragonfly_work/dragonfly_outputs_weighted/TME08-1/dragonfly_output_vis/transformation_outputs.npz&#39; -low_img_paths  &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_01_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_02_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_03_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_04_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_05_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_06_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_07_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/10x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_10x_08_ch_0_pow_[0.125]_down.npz&#39; -low_img_ids &#39;01&#39; &#39;02&#39; &#39;03&#39; &#39;04&#39; &#39;05&#39; &#39;06&#39; &#39;07&#39; &#39;08&#39; -high_img_paths  &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_01A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_01B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_02A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_02B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_03A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_03B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_04A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_04B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_05A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_05B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_06A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_06B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_07A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_07B_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_08A_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/TME08-1_downsampled/30x/ch_0_pipeline_building/Camk2a-MORF3-D1Tom_TME08-1_30x_Str_08B_ch_0_pow_[0.125]_down.npz&#39; -outdir &#39;/home/abenneck/dragonfly_work/dragonfly_outputs_script/TME08-1/step3_out&#39; -atlas_paths &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/ara_nissl_50.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/average_template_50.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/dong/upenn_atlas/UPenn_labels_reoriented_origin.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/dong/upenn_atlas/atlas_info_KimRef_FPbasedLabel_v2.7.csv&#39; -e_path &#39;/home/abenneck/Desktop/emlddmm&#39; -d_path &#39;/home/abenneck/Desktop/donglab_workflows&#39;</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Whole-Brain-Example-Output">
+<h2>Whole Brain Example Output<a class="headerlink" href="#Whole-Brain-Example-Output" title="Link to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/dragonfly_work/dragonfly_outputs_weighted/TME08-1/step3QC_highlight/TME08-1_04_seg.jpg&#39;</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.image.AxesImage at 0x7b08ebc8c820&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/script_tests_13_1.png" src="_images/script_tests_13_1.png" />
+</div>
+</div>
+</section>
+<section id="Hemisphere-brain-example-(hTME15-1)">
+<h2>Hemisphere brain example (hTME15-1)<a class="headerlink" href="#Hemisphere-brain-example-(hTME15-1)" title="Link to this heading">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define all input variables</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="s1">&#39;hTME15-1&#39;</span>
+<span class="n">orientation</span> <span class="o">=</span> <span class="s1">&#39;R&#39;</span>
+<span class="n">neuron_dir</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_reconstructions&#39;</span>
+<span class="n">low_to_high_dir</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/andrew_work/test/dragonfly_work/dragonfly_outputs/hTME15-1/dragonfly_10_to_30_outputs&#39;</span>
+<span class="n">tform</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/andrew_work/test/dragonfly_work/dragonfly_outputs_weighted/hTME15-1/dragonfly_output_vis/transformation_outputs.npz&#39;</span>
+
+<span class="n">low_img_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_01_2023-05-08_10.12.46_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_02_2023-05-08_10.31.20_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_03_2023-05-08_10.48.01_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_04_2023-05-08_11.24.52_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_05_2023-05-08_11.43.25_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_06_2023-05-08_11.57.43_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_07_2023-05-08_12.19.31_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_08_2023-05-08_12.35.58_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                 <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_09_2023-05-08_12.55.16_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span>
+                <span class="p">]</span>
+<span class="n">low_img_ids</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;01&#39;</span><span class="p">,</span><span class="s1">&#39;02&#39;</span><span class="p">,</span><span class="s1">&#39;03&#39;</span><span class="p">,</span><span class="s1">&#39;04&#39;</span><span class="p">,</span><span class="s1">&#39;05&#39;</span><span class="p">,</span><span class="s1">&#39;06&#39;</span><span class="p">,</span><span class="s1">&#39;07&#39;</span><span class="p">,</span><span class="s1">&#39;08&#39;</span><span class="p">,</span><span class="s1">&#39;09&#39;</span><span class="p">]</span>
+
+<span class="n">high_img_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_01_2023-05-12_11.34.43_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_02_2023-05-12_13.50.00_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_03_2023-05-12_16.29.54_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_04_2023-05-15_09.51.46_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_05_2023-05-15_11.59.03_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_06_2023-05-15_13.24.24_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_07_2023-05-15_14.35.58_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span><span class="p">,</span>
+                  <span class="s1">&#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_08_2023-05-15_17.25.31_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39;</span>
+                 <span class="p">]</span>
+<span class="n">high_img_ids</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;01&#39;</span><span class="p">],[</span><span class="s1">&#39;02&#39;</span><span class="p">],[</span><span class="s1">&#39;03&#39;</span><span class="p">],[</span><span class="s1">&#39;04&#39;</span><span class="p">],[</span><span class="s1">&#39;05&#39;</span><span class="p">],[</span><span class="s1">&#39;06&#39;</span><span class="p">],[</span><span class="s1">&#39;07&#39;</span><span class="p">],[</span><span class="s1">&#39;08&#39;</span><span class="p">]]</span>
+
+<span class="n">outdir</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/dragonfly_work/dragonfly_outputs_script/hTME15-1/step3_out&#39;</span>
+<span class="n">atlas_paths</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/ara_nissl_50.vtk&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/average_template_50.vtk&#39;</span><span class="p">,</span><span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/dong/upenn_atlas/UPenn_labels_reoriented_origin.vtk&#39;</span><span class="p">,</span> <span class="s1">&#39;/home/abenneck/mounts/bmaproot/nafs/dtward/dong/upenn_atlas/atlas_info_KimRef_FPbasedLabel_v2.7.csv&#39;</span><span class="p">]</span>
+<span class="n">d_path</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/Desktop/donglab_workflows&#39;</span>
+<span class="n">e_path</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/Desktop/emlddmm&#39;</span>
+
+<span class="c1"># Example where all required input arguments are provided + -toggle_cp = True</span>
+<span class="c1"># !python3 step3_atlas_registration.py &#39;hTME15-1&#39; &#39;R&#39; -neuron_dir &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_reconstructions&#39; -low_to_high_dir &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/andrew_work/test/dragonfly_work/dragonfly_outputs/hTME15-1/dragonfly_10_to_30_outputs&#39; -tform &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/andrew_work/test/dragonfly_work/dragonfly_outputs_weighted/hTME15-1/dragonfly_output_vis/transformation_outputs.npz&#39; -low_img_paths  &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_01_2023-05-08_10.12.46_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_02_2023-05-08_10.31.20_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_03_2023-05-08_10.48.01_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_04_2023-05-08_11.24.52_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_05_2023-05-08_11.43.25_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_06_2023-05-08_11.57.43_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_07_2023-05-08_12.19.31_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_08_2023-05-08_12.35.58_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; -low_img_ids &#39;01&#39; &#39;02&#39; &#39;03&#39; &#39;04&#39; &#39;05&#39; &#39;06&#39; &#39;07&#39; &#39;08&#39; -high_img_paths  &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_01_2023-05-12_11.34.43_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_02_2023-05-12_13.50.00_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_03_2023-05-12_16.29.54_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_04_2023-05-15_09.51.46_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_05_2023-05-15_11.59.03_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_06_2023-05-15_13.24.24_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_07_2023-05-15_14.35.58_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_08_2023-05-15_17.25.31_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; -high_img_ids &#39;[[01],[02],[03],[04],[05],[06],[07],[08]]&#39; -outdir &#39;/home/abenneck/dragonfly_work/dragonfly_outputs_script/hTME15-1/step3_out&#39; -atlas_paths &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/ara_nissl_50.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/average_template_50.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/dong/upenn_atlas/UPenn_labels_reoriented_origin.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/dong/upenn_atlas/atlas_info_KimRef_FPbasedLabel_v2.7.csv&#39; -toggle_cp True -d_path &#39;/home/abenneck/Desktop/donglab_workflows&#39; -e_path &#39;/home/abenneck/Desktop/emlddmm&#39;</span>
+
+<span class="c1"># Example where the high_img_ids argument is not provided, but rather generated within the script</span>
+<span class="c1"># !python3 step3_atlas_registration.py &#39;hTME15-1&#39; &#39;R&#39; -neuron_dir &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_reconstructions&#39; -low_to_high_dir &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/andrew_work/test/dragonfly_work/dragonfly_outputs/hTME15-1/dragonfly_10_to_30_outputs&#39; -tform &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/andrew_work/test/dragonfly_work/dragonfly_outputs_weighted/hTME15-1/dragonfly_output_vis/transformation_outputs.npz&#39; -low_img_paths  &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_01_2023-05-08_10.12.46_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_02_2023-05-08_10.31.20_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_03_2023-05-08_10.48.01_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_04_2023-05-08_11.24.52_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_05_2023-05-08_11.43.25_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_06_2023-05-08_11.57.43_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_07_2023-05-08_12.19.31_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/10x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_10X_08_2023-05-08_12.35.58_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; -low_img_ids &#39;01&#39; &#39;02&#39; &#39;03&#39; &#39;04&#39; &#39;05&#39; &#39;06&#39; &#39;07&#39; &#39;08&#39; -high_img_paths  &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_01_2023-05-12_11.34.43_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_02_2023-05-12_13.50.00_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_03_2023-05-12_16.29.54_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_04_2023-05-15_09.51.46_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_05_2023-05-15_11.59.03_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_06_2023-05-15_13.24.24_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_07_2023-05-15_14.35.58_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; &#39;/home/abenneck/mounts/bmaproot/panfs/dong/3D_registration/Yang_MORF_DragonFly/Q140_MORF_D1/Camk-MORF3-D1Tom_12m_hTME15-1_downsampled/30x/ch_0_pipeline_building/hTME15-1_Camk-MORF3-D1Tom_12m_30X_Str_08_2023-05-15_17.25.31_FusionStitcher_ch_0_pow_[0.125]_down.npz&#39; -outdir &#39;/home/abenneck/dragonfly_work/dragonfly_outputs_script/hTME15-1/step3_out&#39; -atlas_paths &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/ara_nissl_50.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/allen_vtk/allen_vtk/average_template_50.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/dong/upenn_atlas/UPenn_labels_reoriented_origin.vtk&#39; &#39;/home/abenneck/mounts/bmaproot/nafs/dtward/dong/upenn_atlas/atlas_info_KimRef_FPbasedLabel_v2.7.csv&#39; -d_path &#39;/home/abenneck/Desktop/donglab_workflows&#39; -e_path &#39;/home/abenneck/Desktop/emlddmm&#39;</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Hemisphere-Brain-Example-Output">
+<h2>Hemisphere Brain Example Output<a class="headerlink" href="#Hemisphere-Brain-Example-Output" title="Link to this heading">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="n">fname</span> <span class="o">=</span> <span class="s1">&#39;/home/abenneck/dragonfly_work/dragonfly_outputs_weighted/hTME15-1/step3QC/hTME15-1_04_seg.jpg&#39;</span>
+<span class="n">img</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.image.AxesImage at 0x7b08e88b4d60&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/script_tests_17_1.png" src="_images/script_tests_17_1.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Step 1 Example</a><ul>
+<li><a class="reference internal" href="#Step-1-Outputs">Step 1 Outputs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Step-2-Example">Step 2 Example</a><ul>
+<li><a class="reference internal" href="#Step-2-Outputs">Step 2 Outputs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#Step-3-Example">Step 3 Example</a><ul>
+<li><a class="reference internal" href="#Whole-brain-example-(TME08-1)">Whole brain example (TME08-1)</a></li>
+<li><a class="reference internal" href="#Whole-Brain-Example-Output">Whole Brain Example Output</a></li>
+<li><a class="reference internal" href="#Hemisphere-brain-example-(hTME15-1)">Hemisphere brain example (hTME15-1)</a></li>
+<li><a class="reference internal" href="#Hemisphere-Brain-Example-Output">Hemisphere Brain Example Output</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="registration_scripts.html"
+                          title="previous chapter">Tutorials</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/script_tests.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="registration_scripts.html" title="Tutorials"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Mouse Brain Atlas Registration 0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="registration_scripts.html" >Tutorials</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Step 1 Example</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Andrew Bennecke.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+  </body>
+</html>
