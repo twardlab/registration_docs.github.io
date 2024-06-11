@@ -1,3 +1,4 @@
 # This is a comment
 
-theme: jekyll-theme-modernist
+name: registration_docs
+theme: minima
